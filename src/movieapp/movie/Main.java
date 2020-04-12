@@ -34,13 +34,10 @@ public class Main {
 		superbad.addReview(reviewSuperbad2);
 		superbad.addReview(reviewSuperbad3);
 
-		Movie[] movies = { inception, superbad };
-
 		MovieDatabase database = new MovieDatabase();
 		database.addMovie(inception);
 		database.addMovie(superbad);
 		database.addMovie(killbill);
-		// System.out.println(Arrays.toString(database.getMovies()));
 
 		MovieReport[] movieReport = database.generatePopularMovieReport();
 
