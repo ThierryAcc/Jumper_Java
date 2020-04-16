@@ -10,7 +10,6 @@ import java.util.List;
 
 import de.vandermeer.asciitable.AsciiTable;
 
-
 // CTRL + SHIFT + O
 public class Corona {
 
@@ -18,14 +17,13 @@ public class Corona {
 		final String COUNTRIES = "countriesAndTerritories";
 		final String CASES = "cases";
 		final String DEATHS = "deaths";
-		
+
 		int casesRow = 0;
 		int deathsRow = 0;
 		int countriesAndTerritoriesRow = 0;
 
 		// READ FILE
-		List<String> lines = Files.readAllLines(new File("res/corona.csv").toPath(),
-				Charset.defaultCharset());
+		List<String> lines = Files.readAllLines(new File("res/corona.csv").toPath(), Charset.defaultCharset());
 		String[] linesArray = lines.toArray(new String[lines.size()]);
 
 		// SEPARATE HEADER AND GET POSITION OF ROWS
@@ -45,54 +43,54 @@ public class Corona {
 		int deaths = 0;
 		String country = null;
 		List<String> contentList;
-		String[] filteredHeader = {COUNTRIES, CASES, DEATHS};
+		String[] filteredHeader = { COUNTRIES, CASES, DEATHS };
 		List<String[]> finalArray = new ArrayList<>();
 		finalArray.add(filteredHeader);
-		
+
 		for (int i = 1; i < linesArray.length; i++) {
 			contentList = Arrays.asList(linesArray[i].split(","));
-			for (int j = contentList.size()-1; j > 0; j--) {
+			for (int j = contentList.size() - 1; j > 0; j--) {
 				if (j == casesRow) {
-					cases += Integer.parseInt(contentList.get(j)); 
+					cases += Integer.parseInt(contentList.get(j));
 				} else if (j == deathsRow) {
 					deaths += Integer.parseInt(contentList.get(j));
 				} else if (j == countriesAndTerritoriesRow) {
 					if (contentList.get(j).equals(country) || country == null) {
-						country = contentList.get(j);						
+						country = contentList.get(j);
 					} else {
-						String[] myContent = {country, String.valueOf(cases), String.valueOf(deaths)};
+						String[] myContent = { country, String.valueOf(cases), String.valueOf(deaths) };
 						finalArray.add(myContent);
 						cases = 0;
 						deaths = 0;
 						country = null;
 					}
-				}				
+				}
 			}
 		}
-		
+
 		StringBuilder builder = new StringBuilder();
-		
+
 		builder.append(COUNTRIES);
 		builder.append(" -- ");
 		builder.append(CASES);
 		builder.append(" -- ");
 		builder.append(DEATHS);
 		builder.append("\n");
-		
+
 		for (int i = 1; i < finalArray.size(); i++) {
 			builder.append("Country: ");
 			builder.append(finalArray.get(i)[0]);
-			builder.append(", Cases: " );
+			builder.append(", Cases: ");
 			builder.append(finalArray.get(i)[1]);
-			builder.append(", Deaths: " );
+			builder.append(", Deaths: ");
 			builder.append(finalArray.get(i)[2]);
 			builder.append("\n");
 		}
-		
+
 		System.out.println(builder);
-		
+
 		AsciiTable at = new AsciiTable();
-		
+
 		at.addRule();
 		at.addRow(COUNTRIES, CASES, DEATHS);
 		at.addRule();

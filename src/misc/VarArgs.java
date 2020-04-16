@@ -15,6 +15,7 @@ public class VarArgs {
 	public static void main(String[] args) {
 		print(1, "eins", "zwei", "drei", "vier");
 		print(2, "b");
+		print(200);
 	}
 
 }
